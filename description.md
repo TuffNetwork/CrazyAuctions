@@ -19,10 +19,10 @@
 3) The file you downloaded goes in the `plugins` folder.
 4) Restart the server.
 5) Run /crazyauctions
-6) View the documentation @ https://docs.crazycrew.us/docs/plugins/crazyauctions
+6) View the documentation @ https://docs.crazycrew.us/mods/crazyenvoys/
 
 ## Useful Information
-Please make sure to [read our documentation](https://docs.crazycrew.us/docs/plugins/crazyauctions) thoroughly, and if you notice something is lacking. You can create a pull request to update the information for that page by hitting "Edit this page" at the bottom.
+Please make sure to [read our documentation](https://docs.crazycrew.us/mods/crazyenvoys/) thoroughly, and if you notice something is lacking. You can create a pull request to update the information for that page by hitting "Edit this page" at the bottom.
 
 All support for the plugin is provided on [Discord](https://discord.gg/badbones-s-live-chat-182615261403283459). If a question cannot be answered on the wiki, The next best place is to ask it in the Discord.
 

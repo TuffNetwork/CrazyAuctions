@@ -13,8 +13,8 @@
 
 <big>**Quick Links**</big><br>
 [Request Features](https://github.com/Crazy-Crew/CrazyAuctions/issues)<br>
-[Documentation](https://docs.crazycrew.us/docs/category/crazyauctions)<br>
-[Developer API](https://docs.crazycrew.us/docs/plugins/crazyauctions/guides/api/intro)<br>
+[Documentation](https://docs.crazycrew.us/docs/mods/crazyauctions)<br>
+[Developer API](https://docs.crazycrew.us/mods/crazyauctions/dev/)<br>
 [Report Bugs](https://github.com/Crazy-Crew/CrazyAuctions/issues)<br>
 [Trello Board](https://trello.com/b/B9exh23d/crazyauctions)
 

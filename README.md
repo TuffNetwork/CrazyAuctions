@@ -18,7 +18,7 @@
 3) The file you downloaded goes in the `plugins` folder.
 4) Restart the server.
 5) Run /crazyauctions
-6) View the documentation @ https://docs.crazycrew.us/mods/crazyenvoys/
+6) View the documentation @ https://docs.crazycrew.us/mods/crazyauctions/
 
 ## Contributing
 - https://docs.crazycrew.us/mods/crazyauctions/contributing/

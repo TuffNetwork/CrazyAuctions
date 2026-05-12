@@ -374,23 +374,18 @@ public class AuctionCommand implements CommandExecutor {
                     data.set("Items." + num + ".Full-Time", Methods.convertToMill(config.getString("Settings.Full-Expire-Time", "10d")));
                     int id = ThreadLocalRandom.current().nextInt(Integer.MAX_VALUE);
 
-                    // Runs 3x to check for same ID.
-                    for (String i : data.getConfigurationSection("Items").getKeys(false))
-                        if (data.getInt("Items." + i + ".StoreID") == id)
-                            id = ThreadLocalRandom.current().nextInt(Integer.MAX_VALUE);
-                    for (String i : data.getConfigurationSection("Items").getKeys(false))
-                        if (data.getInt("Items." + i + ".StoreID") == id)
-                            id = ThreadLocalRandom.current().nextInt(Integer.MAX_VALUE);
-                    for (String i : data.getConfigurationSection("Items").getKeys(false))
-                        if (data.getInt("Items." + i + ".StoreID") == id)
-                            id = ThreadLocalRandom.current().nextInt(Integer.MAX_VALUE);
+                    while (crazyManager.getAuctionItemByStoreId(id) != null) {
+                        id = ThreadLocalRandom.current().nextInt(Integer.MAX_VALUE);
+                    }
 
                     data.set("Items." + num + ".StoreID", id);
                     ShopType type = ShopType.SELL;
 
+                    boolean biddable = false;
                     if (args[0].equalsIgnoreCase("bid")) {
                         data.set("Items." + num + ".Biddable", true);
                         type = ShopType.BID;
+                        biddable = true;
                     } else {
                         data.set("Items." + num + ".Biddable", false);
                     }
@@ -401,9 +396,20 @@ public class AuctionCommand implements CommandExecutor {
                     ItemStack stack = item.clone();
                     stack.setAmount(amount);
 
-                    data.set("Items." + num + ".Item", Methods.toBase64(stack));
+                    String base64 = Methods.toBase64(stack);
+                    data.set("Items." + num + ".Item", base64);
 
                     Files.data.save();
+
+                    long expireTime;
+                    if (args[0].equalsIgnoreCase("bid")) {
+                        expireTime = Methods.convertToMill(config.getString("Settings.Bid-Time", "2m 30s"));
+                    } else {
+                        expireTime = Methods.convertToMill(config.getString("Settings.Sell-Time", "2d"));
+                    }
+
+                    AuctionItem auctionItem = new AuctionItem(String.valueOf(num), stack, id, biddable, seller, player.getName(), price, expireTime, Methods.convertToMill(config.getString("Settings.Full-Expire-Time", "10d")), "None", "None");
+                    crazyManager.addAuctionItem(auctionItem);
 
                     new AuctionListEvent(player, type, stack, price).callEvent();
 
@@ -446,22 +452,18 @@ public class AuctionCommand implements CommandExecutor {
 
         int num = 1;
 
-        for (String i : data.getConfigurationSection("Items").getKeys(false)) {
-
-            OfflinePlayer seller = Methods.getOfflinePlayer(data.getString("Items." + i + ".Seller"));
+        for (AuctionItem item : crazyManager.getAuctionItems()) {
+            OfflinePlayer seller = Methods.getOfflinePlayer(item.getSellerUuid());
 
             if (seller.getPlayer() != null) {
                 seller.getPlayer().sendMessage(Messages.ADMIN_FORCE_CANCELLED_TO_PLAYER.getMessage(player));
             }
 
-            num = Methods.expireItem(num, seller, i, data, Reasons.ADMIN_FORCE_CANCEL);
-
+            num = Methods.expireItem(num, seller, item.getKey(), data, Reasons.ADMIN_FORCE_CANCEL);
         }
 
         Files.data.save();
-
         player.sendMessage(Messages.ADMIN_FORCE_CANCELLED_ALL.getMessage(player));
-
     }
 
 }

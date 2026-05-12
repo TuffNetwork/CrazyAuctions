@@ -137,7 +137,7 @@ public class ItemBuilder {
         this.target = itemBuilder.target;
 
         this.material = itemBuilder.material;
-        this.itemStack = itemBuilder.itemStack;
+        this.itemStack = itemBuilder.itemStack.clone();
 
         this.customMaterial = itemBuilder.customMaterial;
 
@@ -202,7 +202,7 @@ public class ItemBuilder {
     }
 
     public ItemBuilder(ItemStack itemStack) {
-        this.itemStack = itemStack;
+        this.itemStack = itemStack.clone();
 
         this.material = itemStack.getType();
 
@@ -234,7 +234,7 @@ public class ItemBuilder {
     public ItemBuilder(ItemStack itemStack, Player target) {
         this.target = target;
 
-        this.itemStack = itemStack;
+        this.itemStack = itemStack.clone();
 
         this.material = itemStack.getType();
 

@@ -598,26 +598,42 @@ public class GuiListener implements Listener {
         FileConfiguration config = Files.config.getConfiguration();
 
         if (config.getBoolean("Settings.Sounds.Toggle", false)) {
-            String sound = config.getString("Settings.Sounds.Sound", "");
+            String soundName = config.getString("Settings.Sounds.Sound", "");
+            if (soundName.isEmpty()) return;
 
-            Sound soundToPlay = Registry.SOUNDS.get(NamespacedKey.minecraft(sound));
+            Sound sound = null;
+            try {
+                sound = Sound.valueOf(soundName.toUpperCase());
+            } catch (Exception e) {
+                try {
+                    sound = Registry.SOUNDS.get(NamespacedKey.minecraft(soundName.toLowerCase().replace("_", ".")));
+                } catch (Exception ignored) {}
+            }
 
-            if (soundToPlay == null) return;
-
-            player.playSound(player.getLocation(), soundToPlay, 1, 1);
+            if (sound != null) {
+                player.playSound(player.getLocation(), sound, 1, 1);
+            }
         }
     }
 
     private void playSoldSound(@NotNull Player player) {
         FileConfiguration config = Files.config.getConfiguration();
 
-        String sound = config.getString("Settings.Sold-Item-Sound", "");
+        String soundName = config.getString("Settings.Sold-Item-Sound", "");
+        if (soundName.isEmpty()) return;
 
-        Sound soundToPlay = Registry.SOUNDS.get(NamespacedKey.minecraft(sound));
+        Sound sound = null;
+        try {
+            sound = Sound.valueOf(soundName.toUpperCase());
+        } catch (Exception e) {
+            try {
+                sound = Registry.SOUNDS.get(NamespacedKey.minecraft(soundName.toLowerCase().replace("_", ".")));
+            } catch (Exception ignored) {}
+        }
 
-        if (soundToPlay == null) return;
-
-        player.playSound(player.getLocation(), soundToPlay, 1, 1);
+        if (sound != null) {
+            player.playSound(player.getLocation(), sound, 1, 1);
+        }
     }
 
     @EventHandler

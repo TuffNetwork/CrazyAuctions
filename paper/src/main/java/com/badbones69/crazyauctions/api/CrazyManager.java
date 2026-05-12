@@ -13,7 +13,7 @@ public class CrazyManager {
     private boolean sellingEnabled;
     private boolean biddingEnabled;
 
-    private final java.util.Map<String, AuctionItem> auctionItems = new java.util.HashMap<>();
+    private final java.util.Map<String, AuctionItem> auctionItems = new java.util.LinkedHashMap<>();
     private final java.util.Map<Integer, String> storeIdToKey = new java.util.HashMap<>();
 
     public void load() {
@@ -29,7 +29,17 @@ public class CrazyManager {
 
         FileConfiguration data = Files.data.getConfiguration();
         if (data.contains("Items")) {
-            for (String key : data.getConfigurationSection("Items").getKeys(false)) {
+            java.util.List<String> keys = new java.util.ArrayList<>(data.getConfigurationSection("Items").getKeys(false));
+            // Sort keys numerically to preserve order
+            keys.sort((a, b) -> {
+                try {
+                    return Integer.compare(Integer.parseInt(a), Integer.parseInt(b));
+                } catch (NumberFormatException e) {
+                    return a.compareTo(b);
+                }
+            });
+
+            for (String key : keys) {
                 try {
                     String itemBase64 = data.getString("Items." + key + ".Item");
                     if (itemBase64 == null) continue;

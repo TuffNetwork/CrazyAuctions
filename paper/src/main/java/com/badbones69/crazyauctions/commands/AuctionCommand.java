@@ -3,6 +3,7 @@ package com.badbones69.crazyauctions.commands;
 import com.badbones69.crazyauctions.CrazyAuctions;
 import com.badbones69.crazyauctions.Methods;
 import com.badbones69.crazyauctions.api.CrazyManager;
+import com.badbones69.crazyauctions.api.AuctionItem;
 import com.badbones69.crazyauctions.api.enums.*;
 import com.badbones69.crazyauctions.api.events.AuctionCancelledEvent;
 import com.badbones69.crazyauctions.api.events.AuctionListEvent;
@@ -324,7 +325,7 @@ public class AuctionCommand implements CommandExecutor {
 
                     List<String> pdcBlacklist = config.getStringList("Settings.PDC-BlackList");
 
-                    if (item.getPersistentDataContainer().getKeys().stream().anyMatch(key -> pdcBlacklist.contains(key.asString()))) {
+                    if (item.getItemMeta() != null && item.getItemMeta().getPersistentDataContainer().getKeys().stream().anyMatch(key -> pdcBlacklist.contains(key.asString()))) {
                         player.sendMessage(Messages.ITEM_BLACKLISTED.getMessage(sender));
 
                         return true;
@@ -399,7 +400,7 @@ public class AuctionCommand implements CommandExecutor {
                     String base64 = Methods.toBase64(stack);
                     data.set("Items." + num + ".Item", base64);
 
-                    Files.data.save();
+                    Files.data.saveAsync();
 
                     long expireTime;
                     if (args[0].equalsIgnoreCase("bid")) {
@@ -462,7 +463,7 @@ public class AuctionCommand implements CommandExecutor {
             num = Methods.expireItem(num, seller, item.getKey(), data, Reasons.ADMIN_FORCE_CANCEL);
         }
 
-        Files.data.save();
+        Files.data.saveAsync();
         player.sendMessage(Messages.ADMIN_FORCE_CANCELLED_ALL.getMessage(player));
     }
 

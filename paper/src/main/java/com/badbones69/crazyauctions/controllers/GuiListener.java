@@ -3,6 +3,8 @@ package com.badbones69.crazyauctions.controllers;
 import com.badbones69.crazyauctions.CrazyAuctions;
 import com.badbones69.crazyauctions.Methods;
 import com.badbones69.crazyauctions.api.*;
+import com.badbones69.crazyauctions.api.CrazyManager;
+import com.badbones69.crazyauctions.api.AuctionItem;
 import com.badbones69.crazyauctions.api.builders.ItemBuilder;
 import com.badbones69.crazyauctions.api.enums.Category;
 import com.badbones69.crazyauctions.api.enums.Files;
@@ -51,16 +53,17 @@ public class GuiListener implements Listener {
     private static final Map<UUID, String> IDs = new HashMap<>();
 
     public static void openShop(@NotNull Player player, @NotNull ShopType sell, @NotNull Category cat, int page) {
+        Methods.updateAuction();
 
         FileConfiguration config = Files.config.getConfiguration();
         FileConfiguration data = Files.data.getConfiguration();
         List<ItemStack> items = new ArrayList<>();
-        List<Integer> ID = new ArrayList<>();
+        List<String> ID = new ArrayList<>();
 
         if (!data.contains("Items")) {
             data.set("Items.Clear", null);
 
-            Files.data.save();
+            Files.data.saveAsync();
         }
 
         shopCategory.put(player.getUniqueId(), cat);
@@ -200,6 +203,7 @@ public class GuiListener implements Listener {
     }
 
     public static void openCategories(@NotNull Player player, @NotNull ShopType shop) {
+        Methods.updateAuction();
         FileConfiguration config = Files.config.getConfiguration();
 
         Inventory inv = new AuctionMenu(54, Methods.color(config.getString("Settings.Categories"))).getInventory();
@@ -242,12 +246,13 @@ public class GuiListener implements Listener {
     }
 
     public static void openPlayersCurrentList(@NotNull Player player, int page) {
+        Methods.updateAuction();
 
         FileConfiguration config = Files.config.getConfiguration();
         FileConfiguration data = Files.data.getConfiguration();
 
         List<ItemStack> items = new ArrayList<>();
-        List<Integer> ID = new ArrayList<>();
+        List<String> ID = new ArrayList<>();
 
         Inventory inv = new AuctionMenu(54, Methods.color(config.getString("Settings.Players-Current-Items"))).getInventory();
 
@@ -279,12 +284,13 @@ public class GuiListener implements Listener {
     }
 
     public static void openPlayersExpiredList(@NotNull Player player, int page) {
+        Methods.updateAuction();
 
         FileConfiguration config = Files.config.getConfiguration();
         FileConfiguration data = Files.data.getConfiguration();
 
         List<ItemStack> items = new ArrayList<>();
-        List<Integer> ID = new ArrayList<>();
+        List<String> ID = new ArrayList<>();
 
         if (data.contains("OutOfTime/Cancelled")) {
             for (String i : data.getConfigurationSection("OutOfTime/Cancelled").getKeys(false)) {
@@ -442,6 +448,7 @@ public class GuiListener implements Listener {
     }
 
     public static void openViewer(@NotNull Player player, @NotNull String other, int page) {
+        Methods.updateAuction();
 
         FileConfiguration config = Files.config.getConfiguration();
         FileConfiguration data = Files.data.getConfiguration();
@@ -454,7 +461,7 @@ public class GuiListener implements Listener {
         if (!data.contains("Items")) {
             data.set("Items.Clear", null);
 
-            Files.data.save();
+            Files.data.saveAsync();
         }
 
         for (AuctionItem auctionItem : crazyManager.getAuctionItems()) {
@@ -724,7 +731,7 @@ public class GuiListener implements Listener {
 
                     player.sendMessage(Messages.BID_MESSAGE.getMessage(player, placeholders));
 
-                    Files.data.save();
+                    Files.data.saveAsync();
 
                     bidding.put(player.getUniqueId(), 0);
                     player.closeInventory();
@@ -881,7 +888,7 @@ public class GuiListener implements Listener {
                                 }
                                 Methods.expireItem(1, seller, i, data, Reasons.ADMIN_FORCE_CANCEL);
                                 crazyManager.removeAuctionItem(i);
-                                Files.data.save();
+                                Files.data.saveAsync();
                                 player.sendMessage(Messages.ADMIN_FORCE_CANCELLED.getMessage(player));
                                 playClick(player);
                                 openShop(player, shopType.get(player.getUniqueId()), shopCategory.get(player.getUniqueId()), auctionMenu.getPageNumber());
@@ -1063,7 +1070,7 @@ public class GuiListener implements Listener {
 
                     data.set("Items." + ID, null);
                     crazyManager.removeAuctionItem(ID);
-                    Files.data.save();
+                    Files.data.saveAsync();
 
                     playClick(player);
 
@@ -1102,7 +1109,7 @@ public class GuiListener implements Listener {
                         player.sendMessage(Messages.CANCELLED_ITEM.getMessage(player));
                         Methods.expireItem(1, player, i, data, Reasons.PLAYER_FORCE_CANCEL);
                         crazyManager.removeAuctionItem(i);
-                        Files.data.save();
+                        Files.data.saveAsync();
                         playClick(player);
                         openPlayersCurrentList(player, 1);
                         return;
@@ -1167,7 +1174,7 @@ public class GuiListener implements Listener {
 
                     player.sendMessage(Messages.GOT_ITEM_BACK.getMessage(player));
 
-                    Files.data.save();
+                    Files.data.saveAsync();
 
                     playClick(player);
 
@@ -1197,7 +1204,7 @@ public class GuiListener implements Listener {
                             player.sendMessage(Messages.GOT_ITEM_BACK.getMessage(player));
                             player.getInventory().addItem(Methods.fromBase64(data.getString("OutOfTime/Cancelled." + i + ".Item")));
                             data.set("OutOfTime/Cancelled." + i, null);
-                            Files.data.save();
+                            Files.data.saveAsync();
                             playClick(player);
                             openPlayersExpiredList(player, 1);
                         } else {

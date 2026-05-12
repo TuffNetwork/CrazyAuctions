@@ -46,6 +46,10 @@ public enum Files {
         this.fileManager.saveFile(this.fileName);
     }
 
+    public void saveAsync() {
+        java.util.concurrent.CompletableFuture.runAsync(() -> this.fileManager.saveFile(this.fileName));
+    }
+
     public void reload() {
         this.fileManager.addFile(this.fileName);
     }

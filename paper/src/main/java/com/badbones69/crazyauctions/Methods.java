@@ -6,6 +6,8 @@ import com.badbones69.crazyauctions.api.enums.Reasons;
 import com.badbones69.crazyauctions.api.events.AuctionCancelledEvent;
 import com.badbones69.crazyauctions.api.events.AuctionExpireEvent;
 import com.badbones69.crazyauctions.api.events.AuctionWinBidEvent;
+import com.badbones69.crazyauctions.api.CrazyManager;
+import com.badbones69.crazyauctions.api.AuctionItem;
 import org.bukkit.*;
 import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -348,7 +350,7 @@ public class Methods {
             }
         }
 
-        if (shouldSave) Files.data.save();
+        if (shouldSave) Files.data.saveAsync();
     }
     
     public static String getPrice(String ID, Boolean Expired) {

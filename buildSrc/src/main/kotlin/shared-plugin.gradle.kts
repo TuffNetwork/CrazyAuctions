@@ -1,19 +1,15 @@
 import utils.convertList
 
 plugins {
-    id("com.ryderbelserion.feather.core")
 
     id("java-plugin") apply false
 }
 
 val libs = extensions.getByType(VersionCatalogsExtension::class.java).named("libs")
 
-val git = feather.getBuilder()
-val utils = git.utils
-
-val branch = utils.getRemoteBranch()
-val hash = utils.getRemoteCommitHash()
-val commit = utils.getRemoteCommitMessage(hash, "%B")
+val branch = "main"
+val hash = "0000000"
+val commit = "Manual Build"
 
 val isBeta: Boolean = branch == rootProject.property("beta_branch").toString()
 val isAlpha: Boolean = branch == rootProject.property("alpha_branch").toString()

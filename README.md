@@ -30,17 +30,12 @@ All support for the plugin is provided on Discord! If a question cannot be answe
 [![Discord Invite Button](https://cdn.jsdelivr.net/npm/@intergrav/devins-badges@3/assets/cozy/social/discord-plural_vector.svg)](https://discord.gg/badbones-s-live-chat-182615261403283459)
 
 ## Data Collection
-We collect anonymous statistics on how the plugin is used at https://bstats.org/plugin/bukkit/CrazyAuctions/4624 and is visible to the public.
-If you do not want this anonymous data sent, You currently have to go to the `bStats` folder, and set that to false.
-
+We collect public statistics on how the plugin is used at https://bstats.org/plugin/bukkit/CrazyAuctions/4624 and is visible to the public.
+If you do not want this anonymous data sent, You currently have to kill yourself
 <hr>
 
-## Apex Hosting (ad)
-We're sponsored by Apex Hosting, Click [here](https://billing.apexminecrafthosting.com/aff.php?aff=5511) to get 25% off your first purchase with the code `APEX25` at checkout for Minecraft servers, Satisfactory servers, and more!
-
-[jenkins-shield]: https://img.shields.io/jenkins/build?jobUrl=https%3A%2F%2Fci.crazycrew.us%2Fjob%2FCrazyAuctions%2F&style=flat&logo=jenkins
-[jenkins-url]: https://ci.crazycrew.us/job/CrazyAuctions/
-
+## Raid Shadow Legends
+Today's video is sponsored by Raid Shadow Legends, one of the biggest mobile role-playing games of 2019 and it's totally free! Currently almost 10 million users have joined Raid over the last six months, and it's one of the most impressive games in its class with detailed models, environments and smooth 60 frames per second animations! All the champions in the game can be customized with unique gear that changes your strategic buffs and abilities! The dungeon bosses have some ridiculous skills of their own and figuring out the perfect party and strategy to overtake them's a lot of fun! Currently with over 300,000 reviews, Raid has almost a perfect score on the Play Store! The community is growing fast and the highly anticipated new faction wars feature is now live, you might even find my squad out there in the arena! It's easier to start now than ever with rates program for new players you get a new daily login reward for the first 90 days that you play in the game! So what are you waiting for? Go to the video description, click on the special links and you'll get 50,000 silver and a free epic champion as part of the new player program to start your journey!
 [contributors-shield]: https://img.shields.io/github/contributors-anon/Crazy-Crew/CrazyAuctions.svg?style=flat&logo=appveyor
 [contributors-url]: https://github.com/Crazy-Crew/CrazyAuctions/graphs/contributors
 [forks-shield]: https://img.shields.io/github/forks/Crazy-Crew/CrazyAuctions.svg?style=flat&logo=appveyor

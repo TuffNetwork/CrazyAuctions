@@ -2,6 +2,8 @@ plugins {
     `java-library`
 }
 
+val libs = the<VersionCatalogsExtension>().named("libs")
+
 repositories {
     maven("https://repo.codemc.io/repository/maven-public/")
     maven("https://repo.triumphteam.dev/snapshots/")
@@ -18,6 +20,7 @@ java {
 tasks {
     compileJava {
         options.encoding = Charsets.UTF_8.name()
+        options.release.set(21)
     }
     processResources {
         filteringCharset = Charsets.UTF_8.name()

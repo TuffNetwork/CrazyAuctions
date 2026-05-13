@@ -1,6 +1,6 @@
 <center><div align="center">
 
-![CrazyAuctions](https://raw.githubusercontent.com/Crazy-Crew/Branding/main/crazyauctions/banner/webp/banner.webp)
+![The Nigganator](https://raw.githubusercontent.com/Crazy-Crew/Branding/main/crazyauctions/banner/webp/banner.webp)
 
 [![][jenkins-shield]][jenkins-url]
 [![][discord-shield]][discord-url]

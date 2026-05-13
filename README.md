@@ -25,8 +25,7 @@
 - https://docs.crazycrew.us/mods/crazyauctions/contributing/
 
 ## Support
-All support for the plugin is provided on Discord! If a question cannot be answered on the wiki, The next best place is to ask it in the Discord.
-
+All support for the plugin is provided on Discord! If a question cannot be answered on the wiki, The next best option is to kill yourself
 <!--[![Discord](https://discord.com/api/guilds/182615261403283459/widget.png?style=banner2)](https://discord.gg/badbones-s-live-chat-182615261403283459)<br>-->
 [![Discord Invite Button](https://cdn.jsdelivr.net/npm/@intergrav/devins-badges@3/assets/cozy/social/discord-plural_vector.svg)](https://discord.gg/badbones-s-live-chat-182615261403283459)
 

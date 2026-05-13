@@ -46,12 +46,13 @@ public class CrazyAuctions extends Vital {
         getFileManager().addFile("config.yml")
                 .addFile("data.yml")
                 .addFile("messages.yml")
-                //.addFile("test-file.yml")
                 .init();
 
         this.crazyManager = new CrazyManager();
 
         FileConfiguration configuration = Files.data.getConfiguration();
+
+        boolean needsSave = false;
 
         if (configuration.contains("OutOfTime/Cancelled")) {
             for (String key : configuration.getConfigurationSection("OutOfTime/Cancelled").getKeys(false)) {
@@ -59,8 +60,7 @@ public class CrazyAuctions extends Vital {
 
                 if (itemStack != null) {
                     configuration.set("OutOfTime/Cancelled." + key + ".Item", Base64.getEncoder().encodeToString(itemStack.serializeAsBytes()));
-
-                    Files.data.save();
+                    needsSave = true;
                 }
 
                 final String uuid = configuration.getString("OutOfTime/Cancelled." + key + ".Seller");
@@ -68,9 +68,10 @@ public class CrazyAuctions extends Vital {
                 if (uuid != null) {
                     OfflinePlayer player = Methods.getOfflinePlayer(uuid);
 
-                    configuration.set("OutOfTime/Cancelled." + key + ".Seller", player.getUniqueId().toString());
-
-                    Files.data.save();
+                    if (!uuid.equals(player.getUniqueId().toString())) {
+                        configuration.set("OutOfTime/Cancelled." + key + ".Seller", player.getUniqueId().toString());
+                        needsSave = true;
+                    }
                 }
             }
         }
@@ -81,8 +82,7 @@ public class CrazyAuctions extends Vital {
 
                 if (itemStack != null) {
                     configuration.set("Items." + key + ".Item", Base64.getEncoder().encodeToString(itemStack.serializeAsBytes()));
-
-                    Files.data.save();
+                    needsSave = true;
                 }
 
                 final String uuid = configuration.getString("Items." + key + ".Seller");
@@ -92,8 +92,7 @@ public class CrazyAuctions extends Vital {
 
                     if (!uuid.equals(player.getUniqueId().toString())) {
                         configuration.set("Items." + key + ".Seller", player.getUniqueId().toString());
-
-                        Files.data.save();
+                        needsSave = true;
                     }
                 }
 
@@ -104,12 +103,14 @@ public class CrazyAuctions extends Vital {
 
                     if (!bidder.equals(player.getUniqueId().toString())) {
                         configuration.set("Items." + key + ".TopBidder", player.getUniqueId().toString());
-
-                        Files.data.save();
+                        needsSave = true;
                     }
                 }
             }
         }
+
+        // Save once after all migrations are complete instead of per-item
+        if (needsSave) Files.data.save();
 
         this.crazyManager.load();
 
